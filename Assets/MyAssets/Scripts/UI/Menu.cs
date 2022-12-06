@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class Menu : MonoBehaviour
 {
-    public MenuTag tag;
     public bool open;
 
     public void Open()

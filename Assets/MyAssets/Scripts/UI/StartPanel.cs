@@ -1,13 +1,12 @@
+using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class StartPanel : MonoBehaviour
+public class StartPanel : MonoBehaviour, IPointerDownHandler
 {
-
-    void Update()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            GameEvents.Start();
-        }
-    }
+	public void OnPointerDown(PointerEventData eventData)
+	{
+		GameEvents.Start?.Invoke();
+		gameObject.SetActive(false);
+	}
 }

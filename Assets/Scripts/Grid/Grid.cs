@@ -1,11 +1,10 @@
 using UnityEngine;
 
-public class Grid : MonoBehaviour
+public class GridBase : MonoBehaviour
 {
-	[SerializeField] private bool isAvailable;
-	[SerializeField] private SoilBaseController[] soilBaseControllers;
+	[SerializeField] protected bool isAvailable;
 
-	private Vector2 coord;
+	protected Vector2 coord;
 
 	public bool IsAvailable { get => isAvailable; }
 
