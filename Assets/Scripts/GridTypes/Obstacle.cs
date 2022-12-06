@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Obstacle : GridBaseController
+public class Obstacle : SoilBaseController
 {
 	protected override void OnFinished()
 	{

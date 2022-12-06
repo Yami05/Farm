@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 5144541040811982290}
   - component: {fileID: 510528105964450721}
   - component: {fileID: 7850192616081340022}
-  - component: {fileID: -6549184408259358485}
   - component: {fileID: -7392058498550834793}
   m_Layer: 0
   m_Name: PlantableSoil
@@ -99,18 +98,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &-6549184408259358485
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7910102102842356142}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c23b9cfb3635144e850f39ef5dfc9f1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &-7392058498550834793
 MonoBehaviour:
   m_ObjectHideFlags: 0
