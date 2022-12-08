@@ -1,19 +1,16 @@
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
-public class LosePanel : MonoBehaviour
+public class LosePanel : MonoBehaviour, IPointerDownHandler
 {
-    [SerializeField] Button button;
+	private void Restart()
+	{
+		SceneManager.LoadScene(0);
+	}
 
-    void Start()
-    {
-        button.onClick.AddListener(Restart);
-    }
-
-    private void Restart()
-    {
-        SceneManager.LoadScene(0);
-    }
-
+	public void OnPointerDown(PointerEventData eventData)
+	{
+		Restart();
+	}
 }

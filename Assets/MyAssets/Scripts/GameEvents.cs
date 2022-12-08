@@ -8,4 +8,6 @@ public static class GameEvents
 	public static Action Polygon { get; set; }
 	public static Action GameOver { get; set; }
 	public static Action Win { get; set; }
+	public static Action OnBuy { get; set; }
+	public static Action OnWork { get; set; }
 }

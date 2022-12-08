@@ -8,7 +8,9 @@ public enum PoolItems
 
 public enum AnimType
 {
-	Run,
+	Idle = 0,
+	Walk = 1,
+	Watering = 2,
 }
 
 public enum SoilTypes
@@ -22,5 +24,5 @@ public enum SoilTypes
 
 public class Utilities : MonoBehaviour
 {
-
+	public const string AnimState = "AnimState";
 }

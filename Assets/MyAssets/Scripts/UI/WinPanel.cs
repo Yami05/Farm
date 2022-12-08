@@ -1,18 +1,16 @@
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
-public class WinPanel : MonoBehaviour
+public class WinPanel : MonoBehaviour, IPointerDownHandler
 {
-    [SerializeField] Button button;
+	private void NextLevel()
+	{
+		SceneManager.LoadScene(0);
+	}
 
-    void Start()
-    {
-        button.onClick.AddListener(NextLevel);
-    }
-
-    private void NextLevel()
-    {
-        SceneManager.LoadScene(0);
-    }
+	public void OnPointerDown(PointerEventData eventData)
+	{
+		NextLevel();
+	}
 }
