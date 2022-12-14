@@ -5,7 +5,7 @@ public class StartPanel : MonoBehaviour, IPointerDownHandler
 {
 	public void OnPointerDown(PointerEventData eventData)
 	{
-		GameEvents.Start?.Invoke();
+		ActionManager.Start?.Invoke();
 		gameObject.SetActive(false);
 	}
 }

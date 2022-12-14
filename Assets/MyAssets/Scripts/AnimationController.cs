@@ -6,7 +6,7 @@ public class AnimationController : MonoBehaviour
 
 	void Start()
 	{
-		GameEvents.Start += () => PlayAnim(AnimType.Idle);
+		ActionManager.Start += () => PlayAnim(AnimType.Idle);
 	}
 
 	public void PlayAnim(AnimType type)

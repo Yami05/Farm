@@ -1,16 +1,10 @@
 using UnityEngine;
 
-public class BuyButton : MonoBehaviour
+public class BuyButton : ButtonBaseScript
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+	protected override void OnClick()
+	{
+		base.OnClick();
+		ActionManager.OnBuy?.Invoke();
+	}
 }

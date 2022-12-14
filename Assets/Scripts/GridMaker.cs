@@ -1,12 +1,38 @@
 using UnityEditor;
 using UnityEngine;
 using Sirenix.OdinInspector;
+using System.Linq;
+using System.Collections.Generic;
 
 public class GridMaker : MonoBehaviour
 {
-	[SerializeField] private SoilGrid[,] soilGrids;
-	[SerializeField] private InventoryGrid[,] inventoryGrids;
+	[SerializeField] private SoilGrid[] soilGrids;
+	[SerializeField] private InventoryGrid[] inventoryGrids;
 
+	private void Awake()
+	{
+		ActionManager.OnBuy += OnBuy;
+		ActionManager.OnWork += OnWork;
+	}
+
+	private void OnBuy()
+	{
+
+	}
+
+	private void OnWork()
+	{
+		for (int i = 0; i < inventoryGrids.Length; i++)
+		{
+			if (inventoryGrids[i].Farmer != null)
+			{
+
+
+
+				//inventoryGrids[i].Farmer.StartWorking();
+			}
+		}
+	}
 
 #if UNITY_EDITOR
 	#region GridMaker
@@ -32,8 +58,11 @@ public class GridMaker : MonoBehaviour
 		for (int i = inventoryParent.childCount - 1; i >= 0; i--)
 			DestroyImmediate(inventoryParent.GetChild(0).gameObject);
 
-		soilGrids = new SoilGrid[width, length];
-		inventoryGrids = new InventoryGrid[width, inventoryLenght];
+		soilGrids = new SoilGrid[width * length];
+		inventoryGrids = new InventoryGrid[width * inventoryLenght];
+
+		int iterator = 0;
+		int iterator1 = 0;
 
 		for (int i = 0; i < width; i++)
 		{
@@ -42,7 +71,7 @@ public class GridMaker : MonoBehaviour
 				SoilGrid grid = (PrefabUtility.InstantiatePrefab(soilGridPrefab, gridParent) as GameObject).GetComponent<SoilGrid>();
 				grid.transform.localPosition = new Vector3(i, 0, j);
 				grid.Init(new Vector2(i, j));
-				soilGrids[i, j] = grid;
+				soilGrids[iterator1++] = grid;
 
 			}
 
@@ -51,9 +80,11 @@ public class GridMaker : MonoBehaviour
 				InventoryGrid grid = (PrefabUtility.InstantiatePrefab(inventoryGridPrefab, inventoryParent) as GameObject).GetComponent<InventoryGrid>();
 				grid.transform.localPosition = new Vector3(i, 0, -j - (inventoryZOffset));
 				grid.Init(new Vector2(i, j));
-				inventoryGrids[i, j] = grid;
+				inventoryGrids[iterator++] = grid;
 			}
 		}
+
+		transform.position = new Vector3((width * -0.5f) + 0.5f, transform.position.y, transform.position.z);
 
 	}
 	#endregion

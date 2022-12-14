@@ -1,6 +1,6 @@
 using System;
 
-public static class GameEvents
+public static class ActionManager
 {
 	public static Action Start { get; set; }
 	public static Action EnemyStarter { get; set; }
@@ -10,4 +10,7 @@ public static class GameEvents
 	public static Action Win { get; set; }
 	public static Action OnBuy { get; set; }
 	public static Action OnWork { get; set; }
+	public static Action OnRoundComplete { get; set; }
+
+
 }
