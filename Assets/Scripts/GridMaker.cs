@@ -8,7 +8,6 @@ public class GridMaker : MonoBehaviour
 	[SerializeField] private InventoryGrid[,] inventoryGrids;
 
 
-
 #if UNITY_EDITOR
 	#region GridMaker
 
