@@ -1,11 +1,25 @@
 using UnityEditor;
 using UnityEngine;
 using Sirenix.OdinInspector;
+using System;
 using System.Linq;
 using System.Collections.Generic;
 
 public class GridMaker : MonoBehaviour
 {
+	[Header("GridPreferences")]
+	[SerializeField] private int length;
+	[SerializeField] private int width;
+	[SerializeField] private int inventoryLenght;
+	[SerializeField] private float inventoryZOffset;
+
+	[Header("GridProperties")]
+	[SerializeField] private Transform gridParent;
+	[SerializeField] private GameObject soilGridPrefab;
+	[SerializeField] private GameObject inventoryGridPrefab;
+	[SerializeField] private Transform inventoryParent;
+
+
 	[SerializeField] private SoilGrid[] soilGrids;
 	[SerializeField] private InventoryGrid[] inventoryGrids;
 
@@ -22,32 +36,36 @@ public class GridMaker : MonoBehaviour
 
 	private void OnWork()
 	{
-		for (int i = 0; i < inventoryGrids.Length; i++)
+		List<InventoryGrid> invGrids = Array.FindAll(inventoryGrids, a => a.Farmer != null).ToList();
+		int iterator = 0;
+
+		for (int i = 0; i < width; i++)
 		{
-			if (inventoryGrids[i].Farmer != null)
+			var tempSoidGrids = new SoilGrid[length];
+
+			for (int j = 0; j < length; j++)
 			{
-
-
-
-				//inventoryGrids[i].Farmer.StartWorking();
+				tempSoidGrids[j] = soilGrids[iterator++];
 			}
+
+			for (int k = 0; k < invGrids.Count; k++)
+			{
+				if (invGrids[k].Coord.x == i)
+				{
+					InventoryGrid grid = invGrids[k];
+					grid.Farmer.StartWorking(tempSoidGrids);
+
+					invGrids.RemoveAt(k--);
+				}
+			}
+
 		}
+
 	}
 
 #if UNITY_EDITOR
 	#region GridMaker
 
-	[Header("GridPreferences")]
-	[SerializeField] private int length;
-	[SerializeField] private int width;
-	[SerializeField] private int inventoryLenght;
-	[SerializeField] private float inventoryZOffset;
-
-	[Header("GridProperties")]
-	[SerializeField] private Transform gridParent;
-	[SerializeField] private GameObject soilGridPrefab;
-	[SerializeField] private GameObject inventoryGridPrefab;
-	[SerializeField] private Transform inventoryParent;
 
 	[Button]
 	private void CreateVoxel()

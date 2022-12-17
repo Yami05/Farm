@@ -5,11 +5,37 @@ using UnityEngine;
 
 public class Farmer : MonoBehaviour
 {
-	public void StartWorking(InventoryGrid[] inventoryGrids)
+	[SerializeField] private float movementSpeed;
+
+	[SerializeField] private int workAmount;
+
+	private float offset = 0.15f;
+
+	public void StartWorking(SoilGrid[] soilGrids)
 	{
-		for (int i = 0; i < inventoryGrids.Length; i++)
+		StartCoroutine(IEWork(soilGrids));
+	}
+
+	private IEnumerator IEWork(SoilGrid[] grids)
+	{
+		WaitForFixedUpdate wait = new WaitForFixedUpdate();
+
+		int iterator = 0;
+		int workIndex = workAmount;
+
+		SoilGrid targetGrid = grids[iterator++];
+
+		for (int i = 0; i < workIndex; i++)
 		{
-			Debug.Log(inventoryGrids[i].name);
+			while ((targetGrid.transform.position - transform.position).magnitude > offset)
+			{
+				transform.position = Vector3.MoveTowards(transform.position, targetGrid.transform.position, movementSpeed * Time.fixedDeltaTime);
+				yield return wait;
+			}
+
+			targetGrid = grids[iterator++];
+
+			yield return wait;
 		}
 	}
 }

@@ -5,5 +5,4 @@ using UnityEngine;
 public class SoilGrid : GridBase
 {
 	[SerializeField] private SoilBaseController[] soilBaseControllers;
-
 }
