@@ -11,6 +11,6 @@ public static class ActionManager
 	public static Action OnBuy { get; set; }
 	public static Action OnWork { get; set; }
 	public static Action OnRoundComplete { get; set; }
-
+	public static Action OnFarmerRunEnd{ get; set; }
 
 }

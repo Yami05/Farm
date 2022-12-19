@@ -3,14 +3,17 @@ using UnityEngine;
 
 public enum PoolItems
 {
-
+	Farmer = 0,
 }
 
 public enum AnimType
 {
 	Idle = 0,
 	Walk = 1,
-	Watering = 2,
+	semination = 2,
+	Watering = 3,
+	Harvesting = 4,
+	Mining = 5,
 }
 
 public enum SoilTypes

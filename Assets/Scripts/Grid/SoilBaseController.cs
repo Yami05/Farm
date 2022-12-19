@@ -6,7 +6,7 @@ public class SoilBaseController : MonoBehaviour
 
 	protected virtual void OnFinished()
 	{
-
+		
 	}
 
 	public virtual void Init(GridBase grid)

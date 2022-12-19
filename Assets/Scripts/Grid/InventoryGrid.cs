@@ -4,6 +4,6 @@ public class InventoryGrid : GridBase
 {
 	[SerializeField] private Farmer farmer;
 
-	public Farmer Farmer { get => farmer; }
+	public Farmer Farmer { get => farmer; set => farmer = value; }
 
 }

@@ -5,7 +5,7 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 
-public class GridMaker : MonoBehaviour
+public class GridController : MonoBehaviour
 {
 	[Header("GridPreferences")]
 	[SerializeField] private int length;
@@ -23,15 +23,38 @@ public class GridMaker : MonoBehaviour
 	[SerializeField] private SoilGrid[] soilGrids;
 	[SerializeField] private InventoryGrid[] inventoryGrids;
 
+	[SerializeField] private List<GameObject> farmers = new List<GameObject>();
+
+	private ObjectPool pool;
+
 	private void Awake()
 	{
 		ActionManager.OnBuy += OnBuy;
 		ActionManager.OnWork += OnWork;
+		ActionManager.OnFarmerRunEnd += OnRunEnd;
 	}
 
+	private void Start()
+	{
+		pool = ObjectPool.instance;
+	}
+
+	private bool isEmpty(int i) => inventoryGrids[i].Farmer == null;
 	private void OnBuy()
 	{
+		for (int i = 0; i < inventoryGrids.Length; i++)
+		{
 
+			if (isEmpty(i))
+			{
+				GameObject farmer = pool.GetFromPool(PoolItems.Farmer);
+				inventoryGrids[i].Farmer = farmer.GetComponent<Farmer>();
+				farmer.transform.position = inventoryGrids[i].transform.position;
+				farmer.GetComponent<Farmer>().SetFirstPos(inventoryGrids[i].transform);
+				farmers.Add(farmer);
+				break;
+			}
+		}
 	}
 
 	private void OnWork()
@@ -41,11 +64,11 @@ public class GridMaker : MonoBehaviour
 
 		for (int i = 0; i < width; i++)
 		{
-			var tempSoidGrids = new SoilGrid[length];
+			var tempSoilGrids = new SoilGrid[length];
 
 			for (int j = 0; j < length; j++)
 			{
-				tempSoidGrids[j] = soilGrids[iterator++];
+				tempSoilGrids[j] = soilGrids[iterator++];
 			}
 
 			for (int k = 0; k < invGrids.Count; k++)
@@ -53,19 +76,32 @@ public class GridMaker : MonoBehaviour
 				if (invGrids[k].Coord.x == i)
 				{
 					InventoryGrid grid = invGrids[k];
-					grid.Farmer.StartWorking(tempSoidGrids);
+					grid.Farmer.StartWorking(tempSoilGrids);
 
 					invGrids.RemoveAt(k--);
 				}
 			}
-
 		}
-
 	}
+
+	#region RunControl
+
+	private int farmerIndex;
+	private void OnRunEnd()
+	{
+		farmerIndex++;
+		if (farmerIndex == farmers.Count)
+		{
+			farmerIndex = 0;
+			ActionManager.OnRoundComplete?.Invoke();
+			print("RunFinished");
+		}
+	}
+
+	#endregion
 
 #if UNITY_EDITOR
 	#region GridMaker
-
 
 	[Button]
 	private void CreateVoxel()
@@ -90,7 +126,6 @@ public class GridMaker : MonoBehaviour
 				grid.transform.localPosition = new Vector3(i, 0, j);
 				grid.Init(new Vector2(i, j));
 				soilGrids[iterator1++] = grid;
-
 			}
 
 			for (int j = 0; j < inventoryLenght; j++)
